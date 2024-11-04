@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Citas y Resultados de Pruebas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://thumbs.dreamstime.com/b/%C3%A1rea-de-trabajo-infograf%C3%ADa-m%C3%A9dica-salud-m%C3%A9dico-estetoscopio-y-aguja-para-port%C3%A1til-seguro-jeringa-con-fondo-oscuro-atenci%C3%B3n-250392487.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;            color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .header img {
+            width: 125px; 
+            height: 100px;
+        }
+        h1 {
+            font-size: 2em;
+            color: black;
+            margin: 0;
+        }
+        .container {
+            width: 400px;
+            background-color: #3b3e52; 
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+            flex-grow: 1;
+        }
+        .container h2 {
+            margin-top: 0;
+            text-align: center;
+            font-size: 1.5em;
+            color: #39e6a0; 
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #b0b3c1; 
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background-color: #575d7c;
+            color: #ffffff;
+            font-family: 'Playfair Display', serif;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #39e6a0; 
+            color: #2c2f3f;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #33d190; 
+        }
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 800px;
+            margin: 20px auto;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .image img {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="https://as1.ftcdn.net/v2/jpg/05/36/95/16/1000_F_536951677_uasTLXmtJVnIqyjdBGCW6hCuCODWjTyK.jpg" alt="imagen">
+        <h1>Gestión de Citas y Resultados de Pruebas</h1>
+    </div>
+    
+    <div class="flex-container">
+        
+        <div class="container">
+            <div class="image">
+                <img src="https://img.icons8.com/ios-filled/50/007bff/calendar.png" alt="Agendar Cita">
+            </div>
+            <h2>Programar Cita</h2>
+            <form id="appointment-form">
+                <div class="form-group">
+                    <label for="name">Nombre Completo:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">Fecha de la Cita:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="time">Hora de la Cita:</label>
+                    <input type="time" id="time" name="time" required>
+                </div>
+                <div class="form-group">
+                    <label for="operator">Seleccionar Operador de Pruebas:</label>
+                    <select id="operator" name="operator" required>
+                        <option value="">Selecciona un operador</option>
+                        <option value="operator1">Operador 1</option>
+                        <option value="operator2">Operador 2</option>
+                        <option value="operator3">Operador 3</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Programar Cita</button>
+            </form>
+        </div>
+
+        <!-- Ventana para Consultar Resultado -->
+        <div class="container">
+            <h2>Consultar Resultado</h2>
+            <form id="result-form">
+                <div class="form-group">
+                    <label for="result-email">Correo Electrónico:</label>
+                    <input type="email" id="result-email" name="result-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="result-code">Código de la Prueba:</label>
+                    <input type="text" id="result-code" name="result-code" required>
+                </div>
+                <button type="submit" class="btn">Ver Resultado</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

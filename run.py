@@ -57,6 +57,13 @@ def registro_tipoprueba():
     return render_template('operador/registro_tipoprueba.html')
 
 # -------------------------------
+@app.route('/cita_cliente')
+def cita_cliente():
+    return render_template('clientes/cita_cliente.html')
+
+
+
+
 
 @app.route('/admin_registro_usuario', methods=['GET', 'POST'])
 def registro_usuario():
