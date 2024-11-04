@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Tipo de Prueba</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+            background-color: #28a745;
+        }
+        .navbar-brand, .nav-link {
+            color: #fff !important;
+            font-weight: bold;
+        }
+        .navbar-brand:hover, .nav-link:hover {
+            color: #e9ecef !important;
+        }
+    </style>
+</head>
+<body>
+
+    {% include 'operador/navbar_operador.html' %}
+
+
+<!-- Contenido principal -->
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Registrar Tipo de Prueba</h2>
+    <form action="/registrar_tipo_prueba" method="POST">
+        <!-- Nombre de la Prueba -->
+        <div class="mb-3">
+            <label for="nombre_prueba" class="form-label">Nombre de la Prueba</label>
+            <input type="text" class="form-control" id="nombre_prueba" name="nombre_prueba" placeholder="Ej: Prueba de Sangre Completa" required>
+        </div>
+
+        <!-- Enfermedad que Detecta -->
+        <div class="mb-3">
+            <label for="enfermedad" class="form-label">Enfermedad que Detecta</label>
+            <input type="text" class="form-control" id="enfermedad" name="enfermedad" placeholder="Ej: Diabetes, COVID-19" required>
+        </div>
+
+        <!-- Descripción de la Prueba -->
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción de la Prueba</label>
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="3" placeholder="Descripción breve de la prueba" required></textarea>
+        </div>
+
+        <!-- Tipo de Muestra Requerida -->
+        <div class="mb-3">
+            <label for="tipo_muestra" class="form-label">Tipo de Muestra Requerida</label>
+            <select class="form-select" id="tipo_muestra" name="tipo_muestra" required>
+                <option value="">Seleccione el tipo de muestra</option>
+                <option value="Sangre">Sangre</option>
+                <option value="Orina">Orina</option>
+                <option value="Saliva">Saliva</option>
+                <option value="Hisopo">Hisopo (por ejemplo, para pruebas COVID-19)</option>
+            </select>
+        </div>
+
+        <!-- Instrucciones Previas -->
+        <div class="mb-3">
+            <label for="instrucciones" class="form-label">Instrucciones Previas (si aplica)</label>
+            <textarea class="form-control" id="instrucciones" name="instrucciones" rows="3" placeholder="Ej: Ayuno de 8 horas, evitar medicamentos"></textarea>
+        </div>
+
+        <!-- Tiempo de Entrega del Resultado -->
+        <div class="mb-3">
+            <label for="tiempo_entrega" class="form-label">Tiempo de Entrega del Resultado</label>
+            <input type="text" class="form-control" id="tiempo_entrega" name="tiempo_entrega" placeholder="Ej: 24-48 horas" required>
+        </div>
+
+        <!-- Botón para Registrar la Prueba -->
+        <button type="submit" class="btn btn-primary w-100">Registrar Tipo de Prueba</button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
