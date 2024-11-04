@@ -7,6 +7,7 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+# Rutas para autenticación de usuarios
 @app.route('/login')
 def login():
     return render_template('users/login.html')
@@ -15,6 +16,7 @@ def login():
 def register():
     return render_template('users/register.html')
 
+# Rutas para el operador
 @app.route('/pruebas')
 def pruebas():
     return render_template('operador/pruebas.html')
@@ -31,7 +33,6 @@ def resultados():
 def logout():
     # Aquí podrías agregar la lógica para cerrar sesión si es necesario
     return "Sesión cerrada"
-
 
 @app.route('/navbar_operador')
 def navbar_operador():
@@ -54,6 +55,40 @@ def registro_tipoprueba():
         return redirect(url_for('pruebas'))
 
     return render_template('operador/registro_tipoprueba.html')
+
+# -------------------------------
+
+@app.route('/admin_registro_usuario', methods=['GET', 'POST'])
+def registro_usuario():
+    if request.method == 'POST':
+        # Lógica para procesar y almacenar el usuario en la base de datos
+        pass
+    return render_template('admin/registro_usuario.html')
+
+@app.route('/admin_estadistica_locales')
+def ver_estadisticas_locales():
+    # Aquí puedes traer datos de la base de datos para mostrar en la vista
+    return render_template('admin/estadistica_locales.html')
+
+
+# Rutas para los funcionarios
+@app.route('/funcionarios_estadisticas_local')
+def funcionarios_estadisticas_local():
+    return render_template('funcionarios/funcionarios_estadisticas_local.html')
+
+@app.route('/funcionarios_estadisticas_nacional')
+def funcionarios_estadisticas_nacional():
+    return render_template('funcionarios/funcionarios_estadisticas_nacional.html')
+
+@app.route('/funcionarios_comunicacion', methods=['GET', 'POST'])
+def funcionarios_comunicacion():
+    if request.method == 'POST':
+        cliente_info = request.form['cliente_info']
+        # Aquí podrías realizar la búsqueda del cliente en la base de datos usando `cliente_info`
+        # Luego puedes pasar los datos del cliente a la plantilla
+        return render_template('funcionarios/funcionarios_comunicacion.html', cliente_info=cliente_info)
+
+    return render_template('funcionarios/funcionarios_comunicacion.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

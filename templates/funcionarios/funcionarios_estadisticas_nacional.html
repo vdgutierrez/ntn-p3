@@ -1,0 +1,72 @@
+<!-- templates/funcionarios_estadisticas_nacional.html -->
+{% extends "base_funcionarios.html" %}
+
+{% block title %}Estadísticas Nacionales y Predicciones{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">Estadísticas Nacionales y Modelos de Predicción</h2>
+
+<!-- Sección para seleccionar el tipo de enfermedad -->
+<div class="mb-4">
+    <label for="filtro_enfermedad" class="form-label">Seleccione Tipo de Enfermedad</label>
+    <select class="form-select" id="filtro_enfermedad" onchange="filtrarEnfermedad()">
+        <option value="todos">Todas las enfermedades</option>
+        <option value="VIH">VIH</option>
+        <option value="COVID-19">COVID-19</option>
+    </select>
+</div>
+
+<!-- Tabla para mostrar estadísticas nacionales -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Región</th>
+            <th>Total Pruebas</th>
+            <th>Positivas</th>
+            <th>Negativas</th>
+            <th>Enfermedad</th>
+        </tr>
+    </thead>
+    <tbody id="tabla_estadisticas">
+        <!-- Datos de ejemplo (estos podrían ser generados dinámicamente en una implementación completa) -->
+        <tr data-enfermedad="COVID-19">
+            <td>La Paz</td>
+            <td>5000</td>
+            <td>800</td>
+            <td>4200</td>
+            <td>COVID-19</td>
+        </tr>
+        <tr data-enfermedad="VIH">
+            <td>Cochabamba</td>
+            <td>3000</td>
+            <td>500</td>
+            <td>2500</td>
+            <td>VIH</td>
+        </tr>
+        <tr data-enfermedad="COVID-19">
+            <td>Santa Cruz</td>
+            <td>2000</td>
+            <td>400</td>
+            <td>1600</td>
+            <td>COVID-19</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Script de JavaScript para filtrar la tabla -->
+<script>
+    function filtrarEnfermedad() {
+        const filtro = document.getElementById('filtro_enfermedad').value;
+        const filas = document.querySelectorAll('#tabla_estadisticas tr');
+
+        filas.forEach(fila => {
+            const enfermedad = fila.getAttribute('data-enfermedad');
+            if (filtro === 'todos' || enfermedad === filtro) {
+                fila.style.display = '';
+            } else {
+                fila.style.display = 'none';
+            }
+        });
+    }
+</script>
+{% endblock %}

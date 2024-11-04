@@ -1,14 +1,15 @@
+<!-- templates/base_admin.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operador de Pruebas</title>
+    <title>{% block title %}Panel de Administrador{% endblock %}</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .navbar {
-            background-color: #28a745; /* Verde asociado a la salud */
+            background-color: #343a40;
         }
         .navbar-brand, .nav-link {
             color: #fff !important;
@@ -24,26 +25,20 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Operador de Pruebas</a>
+        <a class="navbar-brand" href="#">Panel de Administrador</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/pruebas">Registro de toma de pruebas</a>
+                    <a class="nav-link" href="/admin_registro_usuario">Registro de Usuarios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/citas">Citas</a>
+                    <a class="nav-link" href="/admin_estadistica_locales">Estadísticas Locales</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/resultados">Resultados</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/registro_tipoprueba">Registrar Prueba</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Cerrar Sesión</a>
+                    <a class="nav-link" href="/">Cerrar Sesion</a>
                 </li>
             </ul>
         </div>
@@ -52,7 +47,7 @@
 
 <!-- Contenido principal -->
 <div class="container mt-5">
-    <h1>Bienvenido al Sistema de Gestión de Pruebas</h1>
+    {% block content %}{% endblock %}
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

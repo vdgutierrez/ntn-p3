@@ -1,0 +1,35 @@
+<!-- templates/admin/ver_estadisticas_locales.html -->
+{% extends "base_admin.html" %}
+
+{% block title %}Estadísticas Locales{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">Estadísticas Locales de Pruebas</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Tipo de Prueba</th>
+            <th>Total Pruebas</th>
+            <th>Positivas</th>
+            <th>Negativas</th>
+            <th>Fecha de Actualización</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Prueba de Sangre</td>
+            <td>1000</td>
+            <td>200</td>
+            <td>800</td>
+            <td>2024-11-04</td>
+        </tr>
+        <tr>
+            <td>COVID-19</td>
+            <td>5000</td>
+            <td>1000</td>
+            <td>4000</td>
+            <td>2024-11-04</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
