@@ -21,16 +21,15 @@
             display: flex;
             width: 1000px;
             max-width: 100000px;
-            height: 50vh;
+            height: auto;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
         }
-        /* Panel izquierdo con la imagen y texto */
         .left-panel {
             background-color: #5cc6c6;
             color: #fff;
-            flex: 3; /* Ajusta este valor para cambiar el ancho relativo */
+            flex: 3;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -50,13 +49,12 @@
         .left-panel img {
             width: 200px;
             margin-top: 20px;
-            border: 20%;
+            border-radius: 50%;
         }
-        /* Panel derecho con el formulario de registro */
         .right-panel {
             background-color: #2a2e43;
             color: #fff;
-            flex: 60; /* Ajusta este valor para cambiar el ancho relativo */
+            flex: 60;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -82,10 +80,6 @@
         .form-control::placeholder, .form-select option {
             color: #b0b3c0;
         }
-        .form-check-label {
-            font-size: 0.8rem;
-            color: #b0b3c0;
-        }
         .register-form .btn-primary {
             background-color: #00ffc3;
             border: none;
@@ -105,15 +99,24 @@
     <!-- Panel izquierdo con el mensaje y gráfico -->
     <div class="left-panel">
         <h1>Bienvenido</h1>
-        <p>Registra tus datos para acceder a todos nuestros servicios .</p>
+        <p>Registra tus datos para acceder a todos nuestros servicios.</p>
         <img src="https://d2lcsjo4hzzyvz.cloudfront.net/blog/wp-content/uploads/2021/09/15113011/Pruebas-para-covid-19.jpg" alt="Gráfico de cliente">
     </div>
     
-    <!-- Panel derecho con el formulario de registro en dos columnas -->
+    <!-- Panel derecho con el formulario de registro -->
     <div class="right-panel">
         <div class="register-form">
             <h2>Registro de Cliente</h2>
-            <form action="/register_cliente" method="POST">
+            <!-- Mensajes Flash -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="alert alert-{{ messages[0][0] }}" role="alert">
+                        {{ messages[0][1] }}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form action="\register_cliente" method="POST">
                 <div class="row">
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="CI" required>
@@ -127,7 +130,7 @@
                         <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" required>
                     </div>
                     <div class="col-md-6">
-                        <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" required>
+                        <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
                     </div>
                 </div>
                 <div class="row">
@@ -139,7 +142,7 @@
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <input type="email" class="form-control" id="correo_electronico" name="correo_electronico" placeholder="Correo Electrónico" required>
+                        <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo Electrónico" required>
                     </div>
                 </div>
                 <div class="row">
@@ -152,16 +155,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="nacionalidad" name="nacionalidad" placeholder="Nacionalidad">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
                     </div>
                     <div class="col-md-6">
-                        <select class="form-select" id="estado_civil" name="estado_civil">
-                            <option value="">Seleccione Estado Civil</option>
-                            <option value="S">Soltero/a</option>
-                            <option value="C">Casado/a</option>
-                            <option value="D">Divorciado/a</option>
-                            <option value="V">Viudo/a</option>
-                        </select>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirmar Contraseña" required>
                     </div>
                 </div>
                 

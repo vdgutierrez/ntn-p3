@@ -83,7 +83,7 @@
     <!-- Panel izquierdo con la imagen de fondo y mensaje de bienvenida -->
     <div class="left-panel">
         <h1>TE DAMOS LA BIENVENIDA....</h1>
-        <p>SISTEMA DE CONTROL DE TOMA DE PRUEBAS </p>
+        <p>SISTEMA DE CONTROL DE TOMA DE PRUEBAS</p>
         <div class="social-icons">
             <i class="bi bi-facebook"></i>
             <i class="bi bi-twitter"></i>
@@ -95,22 +95,29 @@
     <!-- Panel derecho con el formulario de inicio de sesión -->
     <div class="right-panel">
         <div class="login-form">
-            <img src="https://e7.pngegg.com/pngimages/544/1003/png-clipart-black-and-silver-stethoscope-illustration-heart-stethoscope-health-care-cardiology-red-hearts-texture-medical-stethoscope-love-heart-thumbnail.png" alt="Logo"> 
-            <form action="/login" method="POST">
+            <img src="https://e7.pngegg.com/pngimages/544/1003/png-clipart-black-and-silver-stethoscope-illustration-heart-stethoscope-health-care-cardiology-red-hearts-texture-medical-stethoscope-love-heart-thumbnail.png" alt="Logo" class="mb-4 mx-auto d-block" width="100"> 
+            
+            <!-- Mensajes Flash -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="alert alert-{{ messages[0][0] }}" role="alert">
+                        {{ messages[0][1] }}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            <!-- Formulario de inicio de sesión -->
+            <form action="/users/login" method="POST">
                 <div class="mb-3">
                     <label for="email" class="form-label">Correo</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo" required>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Contrasena</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña" required>
                 </div>
-             
-                <button type="submit" class="btn btn-primary" style="background-color: #17a2b8;">Iniciar Sesion</button>
-                
-                <p class="mt-3 text-center"><a href="/register">REGISTRATE AQUI</a></p>
-                
-
+                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                <p class="mt-3 text-center"><a href="/users/register">¿No tienes cuenta? Regístrate aquí</a></p>
             </form>
         </div>
     </div>
