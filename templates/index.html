@@ -55,42 +55,40 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="https://e7.pngegg.com/pngimages/544/1003/png-clipart-black-and-silver-stethoscope-illustration-heart-stethoscope-health-care-cardiology-red-hearts-texture-medical-stethoscope-love-heart-thumbnail.png" alt="Logo"> Pruebas de Salud
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="https://e7.pngegg.com/pngimages/544/1003/png-clipart-black-and-silver-stethoscope-illustration-heart-stethoscope-health-care-cardiology-red-hearts-texture-medical-stethoscope-love-heart-thumbnail.png" alt="Logo"> Pruebas de Salud
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                {% if user_name %}
                     <li class="nav-item">
-                        <a class="nav-link" href="/pruebas">Operador</a>
+                        <span class="nav-link text-light">Bienvenido, {{ user_name }}</span>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/funcionarios_estadisticas_local">Funcionarios</a>
+                        <a class="nav-link btn btn-outline-light" href="/logout">Cerrar Sesión</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin_registro_usuario">Administrador</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/cita_cliente">Cliente</a>
-                    </li>
+                {% else %}
                     <li class="nav-item">
                         <a class="nav-link btn btn-outline-light" href="/users/login">Iniciar Sesión</a>
                     </li>
-                </ul>
-            </div>
+                {% endif %}
+            </ul>
         </div>
-    </nav>
-
+    </div>
+</nav>
     <!-- Hero Section -->
     <section class="hero-section" style="background-image: url(https://www.aon.es/personales/seguro-salud/wp-content/uploads/sites/3/2023/11/AdobeStock_639931130-1200x800.jpeg.webp); background-size: cover; background-position: center;">
         <div class="container">
             <h1 class="mb-4" style="color: #fff;">Sistema Integral de Pruebas Médicas</h1>
             <p class="lead mb-5" style="color: #fff;">Gestión eficiente de pruebas médicas para asegurar la salud y bienestar de todos.</p>
             <a href="/users/register" class="btn btn-primary btn-lg">Regístrate para una Prueba</a>
+            
         </div>
     </section>
 

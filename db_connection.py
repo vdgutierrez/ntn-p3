@@ -7,9 +7,10 @@ def get_db_connection():
             host='localhost',
             user='root',
             password='',
-            database='ntn2'
+            database='ntn3'
         )
         if connection.is_connected():
+            print("Conexión exitosa a la base de datos")
             return connection
     except Error as e:
         print(f"Error al conectar a la base de datos: {e}")

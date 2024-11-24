@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from services.admin.routes import admin_bp
 from services.users.routes import users_bp
+from services.estadisticas.routes import estadisticas_bp
 from db_connection import get_db_connection
 from mysql.connector import Error
 from flask import request, redirect, url_for
@@ -12,11 +13,16 @@ app.secret_key = 'tu_clave_secreta'  # Necesaria para mensajes flash
 # Registrar blueprints de los servicios
 app.register_blueprint(admin_bp, url_prefix='/admin')
 app.register_blueprint(users_bp, url_prefix='/users')
+app.register_blueprint(estadisticas_bp, url_prefix='/est')
+
 
 # Ruta principal que llama a index.html
 @app.route('/')
 def index():
     return render_template('index.html')  # Asegúrate de que index.html esté ubicado correctamente
+
+
+@app.route('/funcionarios')
 
 @app.route('/register_cliente', methods=['POST'])
 def register_cliente():

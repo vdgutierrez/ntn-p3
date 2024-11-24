@@ -1,72 +1,152 @@
-<!-- templates/funcionarios_estadisticas_nacional.html -->
 {% extends "base_funcionarios.html" %}
 
 {% block title %}Estadísticas Nacionales y Predicciones{% endblock %}
 
 {% block content %}
-<h2 class="text-center mb-4">Estadísticas Nacionales y Modelos de Predicción</h2>
+<div class="container mt-4">
+    <!-- Título Principal -->
+    <h2 class="text-center mb-4">Estadísticas Nacionales y Modelos de Predicción</h2>
 
-<!-- Sección para seleccionar el tipo de enfermedad -->
-<div class="mb-4">
-    <label for="filtro_enfermedad" class="form-label">Seleccione Tipo de Enfermedad</label>
-    <select class="form-select" id="filtro_enfermedad" onchange="filtrarEnfermedad()">
-        <option value="todos">Todas las enfermedades</option>
-        <option value="VIH">VIH</option>
-        <option value="COVID-19">COVID-19</option>
-    </select>
+    <!-- Filtro de Enfermedad -->
+    <div class="mb-4">
+        <label for="filtro_enfermedad" class="form-label">Seleccione Tipo de Enfermedad</label>
+        <select class="form-select" id="filtro_enfermedad" onchange="filtrarEnfermedad()">
+            <option value="todos">Todas las enfermedades</option>
+            {% for enfermedad in enfermedades %}
+            <option value="{{ enfermedad }}">{{ enfermedad }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Tabla de Estadísticas Nacionales -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Región</th>
+                <th>Total Pruebas</th>
+                <th>Positivas</th>
+                <th>Negativas</th>
+                <th>Enfermedad</th>
+            </tr>
+        </thead>
+        <tbody id="tabla_estadisticas">
+            {% for estadistica in estadisticas_nacionales %}
+            <tr data-enfermedad="{{ estadistica.enfermedad }}">
+                <td>{{ estadistica.region }}</td>
+                <td>{{ estadistica.total_pruebas }}</td>
+                <td>{{ estadistica.total_positivos }}</td>
+                <td>{{ estadistica.total_negativos }}</td>
+                <td>{{ estadistica.enfermedad }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Gráficos -->
+    <h3 class="text-center mt-5">Distribución de Resultados</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <h5 class="text-center">Resultados por Enfermedad (Barras)</h5>
+            <canvas id="barChart" width="400" height="300"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h5 class="text-center">Comparativa de Resultados por Región (Radar)</h5>
+            <canvas id="radarChart" width="400" height="300"></canvas>
+        </div>
+    </div>
 </div>
 
-<!-- Tabla para mostrar estadísticas nacionales -->
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Región</th>
-            <th>Total Pruebas</th>
-            <th>Positivas</th>
-            <th>Negativas</th>
-            <th>Enfermedad</th>
-        </tr>
-    </thead>
-    <tbody id="tabla_estadisticas">
-        <!-- Datos de ejemplo (estos podrían ser generados dinámicamente en una implementación completa) -->
-        <tr data-enfermedad="COVID-19">
-            <td>La Paz</td>
-            <td>5000</td>
-            <td>800</td>
-            <td>4200</td>
-            <td>COVID-19</td>
-        </tr>
-        <tr data-enfermedad="VIH">
-            <td>Cochabamba</td>
-            <td>3000</td>
-            <td>500</td>
-            <td>2500</td>
-            <td>VIH</td>
-        </tr>
-        <tr data-enfermedad="COVID-19">
-            <td>Santa Cruz</td>
-            <td>2000</td>
-            <td>400</td>
-            <td>1600</td>
-            <td>COVID-19</td>
-        </tr>
-    </tbody>
-</table>
-
-<!-- Script de JavaScript para filtrar la tabla -->
+<!-- Script para Renderizar los Gráficos -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    function filtrarEnfermedad() {
-        const filtro = document.getElementById('filtro_enfermedad').value;
-        const filas = document.querySelectorAll('#tabla_estadisticas tr');
+    // Datos desde el backend
+    const estadisticas = {{ estadisticas_nacionales|tojson }};
 
-        filas.forEach(fila => {
-            const enfermedad = fila.getAttribute('data-enfermedad');
-            if (filtro === 'todos' || enfermedad === filtro) {
-                fila.style.display = '';
-            } else {
-                fila.style.display = 'none';
+    // Procesar datos para gráficos
+    const regiones = [...new Set(estadisticas.map(e => e.region))];
+    const enfermedades = [...new Set(estadisticas.map(e => e.enfermedad))];
+
+    // Datos por enfermedad
+    const positivosPorEnfermedad = enfermedades.map(enfermedad =>
+        estadisticas.filter(e => e.enfermedad === enfermedad).reduce((sum, e) => sum + e.total_positivos, 0)
+    );
+    const negativosPorEnfermedad = enfermedades.map(enfermedad =>
+        estadisticas.filter(e => e.enfermedad === enfermedad).reduce((sum, e) => sum + e.total_negativos, 0)
+    );
+
+    // Datos por región para radar
+    const positivosPorRegion = regiones.map(region =>
+        estadisticas.filter(e => e.region === region).reduce((sum, e) => sum + e.total_positivos, 0)
+    );
+    const negativosPorRegion = regiones.map(region =>
+        estadisticas.filter(e => e.region === region).reduce((sum, e) => sum + e.total_negativos, 0)
+    );
+
+    // Configuración del Gráfico de Barras
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    new Chart(barCtx, {
+        type: 'bar',
+        data: {
+            labels: enfermedades,
+            datasets: [
+                {
+                    label: 'Positivos',
+                    data: positivosPorEnfermedad,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Negativos',
+                    data: negativosPorEnfermedad,
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true }
             }
-        });
-    }
+        }
+    });
+
+    // Configuración del Gráfico de Radar
+    const radarCtx = document.getElementById('radarChart').getContext('2d');
+    new Chart(radarCtx, {
+        type: 'radar',
+        data: {
+            labels: regiones,
+            datasets: [
+                {
+                    label: 'Positivos',
+                    data: positivosPorRegion,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                    fill: true
+                },
+                {
+                    label: 'Negativos',
+                    data: negativosPorRegion,
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                    fill: true
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                r: {
+                    angleLines: { display: true },
+                    suggestedMin: 0
+                }
+            }
+        }
+    });
 </script>
 {% endblock %}
