@@ -20,7 +20,7 @@ def login():
                 user = cursor.fetchone()
                 if user:
                     flash('Inicio de sesión exitoso.', 'success')
-                    return redirect(url_for('operador.citas'))
+                    return redirect(url_for('opciones'))
                 else:
                     flash('Correo o contraseña incorrectos.', 'danger')
             finally:
