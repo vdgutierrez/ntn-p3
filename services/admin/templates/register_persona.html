@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Registro de Personal{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header text-center bg-primary text-white">
+                    <h2>Registro de Personal</h2>
+                </div>
+                <div class="card-body">
+                    <!-- Mostrar mensajes flash -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} mt-2" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <!-- Formulario de registro -->
+                    <form action="{{ url_for('admin.register_persona') }}" method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form.nombre.label }}
+                                {{ form.nombre(class="form-control", placeholder="Nombre") }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.apellido.label }}
+                                {{ form.apellido(class="form-control", placeholder="Apellido") }}
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                {{ form.correo.label }}
+                                {{ form.correo(class="form-control", placeholder="Correo Electrónico") }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.telefono.label }}
+                                {{ form.telefono(class="form-control", placeholder="Teléfono (Solo para médicos y operadores)") }}
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                {{ form.password.label }}
+                                {{ form.password(class="form-control", placeholder="Contraseña") }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.confirm_password.label }}
+                                {{ form.confirm_password(class="form-control", placeholder="Confirmar Contraseña") }}
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                {{ form.zona.label }}
+                                {{ form.zona(class="form-select") }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.tipo_persona.label }}
+                                {{ form.tipo_persona(class="form-select") }}
+                            </div>
+                        </div>
+                        <div class="row mt-3" id="consultorio-section" style="display: none;">
+                            <div class="col-md-12">
+                                {{ form.consultorio.label }}
+                                {{ form.consultorio(class="form-select") }}
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Registrar Personal</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const tipoPersona = document.querySelector('select[name="tipo_persona"]');
+    const consultorioSection = document.getElementById('consultorio-section');
+
+    tipoPersona.addEventListener('change', function () {
+        if (this.value === 'medico' || this.value === 'operador') {
+            consultorioSection.style.display = 'block';
+        } else {
+            consultorioSection.style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}

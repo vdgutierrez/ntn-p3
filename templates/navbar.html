@@ -1,0 +1,74 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <!-- Enlace a la página principal -->
+        <a class="navbar-brand" href="{{ url_for('home') }}">Mi Aplicación</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <!-- Enlace de Inicio -->
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('home') }}">Inicio</a>
+                </li>
+                <!-- Opciones según la tabla del usuario -->
+                {% if session.get('user') %}
+                    {% if session['user']['tipo'] == 'cliente' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('client.cita') }}">Sacar Cita</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('client.resultado') }}">Resultados</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('client.cliente_op') }}">Opciones</a>
+                        </li>
+                    {% elif session['user']['tipo'] == 'medico' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('doctor.historial') }}">Historial</a>
+                        </li>
+                    {% elif session['user']['tipo'] == 'funcionario' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('funcionario.estadisticas') }}">Estadísticas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('funcionario.estadisticas_nacionales') }}">Estadísticas Nacionales</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('funcionario.registrar_enfermedad') }}">Registrar enfermedad</a>
+                        </li>
+                    {% elif session['user']['tipo'] == 'operador' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="">Verificación</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">Resultados</a>
+                        </li>
+                    {% elif session['user']['tipo'] == 'admin' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('admin.register_persona') }}">Registrar</a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav">
+                <!-- Opciones de sesión -->
+                {% if session.get('user') %}
+                    <li class="nav-item">
+                        <span class="nav-link">Bienvenido: {{ session['user']['nombre'] }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="{{ url_for('auth.logout') }}">Cerrar Sesión</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.login') }}">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.register') }}">Registrarse</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,83 @@
+<!-- Extiende la base.html -->
+{% extends "base.html" %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<br><br><br><br><br>
+<section class="text-center text-lg-start">
+  <style>
+    .rounded-t-5 {
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+    }
+
+    @media (min-width: 992px) {
+      .rounded-tr-lg-0 {
+        border-top-right-radius: 0;
+      }
+
+      .rounded-bl-lg-5 {
+        border-bottom-left-radius: 0.5rem;
+      }
+    }
+  </style>
+  <div class="card mb-3">
+    <div class="row g-0 d-flex align-items-center">
+      <div class="col-lg-4 d-none d-lg-flex">
+        <img src="https://img.freepik.com/vector-premium/atencion-medica_18591-16842.jpg?w=360" alt="Trendy Pants and Shoes"
+          class="w-100 rounded-t-5 rounded-tr-lg-0 rounded-bl-lg-5" />
+      </div>
+      <div class="col-lg-8">
+        <div class="card-body py-5 px-md-5">
+
+          <!-- Formulario de inicio de sesión -->
+          <form method="POST" action="{{ url_for('auth.login') }}">
+            {{ form.hidden_tag() }}
+
+            <h5 class="mb-3">Iniciar Sesión</h5>
+
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              {{ form.email(class="form-control", id="form2Example1") }}
+              {% if form.email.errors %}
+                <div class="text-danger">
+                  {{ form.email.errors[0] }}
+                </div>
+              {% endif %}
+              <label class="form-label" for="form2Example1">Correo Electrónico</label>
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              {{ form.password(class="form-control", id="form2Example2") }}
+              {% if form.password.errors %}
+                <div class="text-danger">
+                  {{ form.password.errors[0] }}
+                </div>
+              {% endif %}
+              <label class="form-label" for="form2Example2">Contraseña</label>
+            </div>
+
+            <!-- Botón de envío -->
+            <button type="submit" class="btn btn-primary btn-block mb-4">Iniciar Sesión</button>
+          </form>
+
+          <!-- Mensajes de error generales -->
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }} mt-3" role="alert">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<br><br><br><br><br><br><br>
+{% endblock %}

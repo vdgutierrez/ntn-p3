@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Programar Cita{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Programar una Cita</h1>
+
+    <!-- Mostrar mensajes flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form id="appointment-form" method="POST" action="/client/cliente_op">
+                <!-- Campo: Nombre Completo -->
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nombre Completo:</label>
+                    <input type="text" class="form-control" id="name" name="name" value="{{ session['user']['nombre'] }}" readonly required>
+                </div>
+
+                <!-- Campo: Correo Electrónico -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo Electrónico:</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ session['user']['correo'] }}" readonly required>
+                </div>
+
+                <!-- Campo: Fecha de la Cita -->
+                <div class="mb-3">
+                    <label for="date" class="form-label">Fecha de la Cita:</label>
+                    <input type="date" class="form-control" id="date" name="date" required>
+                </div>
+
+                <!-- Campo: Hora de la Cita -->
+                <div class="mb-3">
+                    <label for="time" class="form-label">Hora de la Cita:</label>
+                    <input type="time" class="form-control" id="time" name="time" required>
+                </div>
+
+                <!-- Campo: Seleccionar Operador -->
+                <div class="mb-3">
+                    <label for="operator" class="form-label">Seleccionar Operador:</label>
+                    <select class="form-select" id="operator" name="operator" required>
+                        {% for operador in operadores %}
+                        <option value="{{ operador['nombre'] }} {{ operador['apellido'] }}">
+                            {{ operador['nombre'] }} {{ operador['apellido'] }}
+                        </option>
+                        {% else %}
+                        <option value="" disabled>No hay operadores disponibles</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Campo: Tipo de Enfermedad -->
+                <div class="mb-3">
+                    <label for="disease" class="form-label">Tipo de Enfermedad:</label>
+                    <select class="form-select" id="disease" name="disease" required>
+                        {% for tipo in tipos_prueba %}
+                        <option value="{{ tipo['prueba'] }}">{{ tipo['prueba'] }}</option>
+                        {% else %}
+                        <option value="" disabled>No hay tipos de prueba disponibles</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Botón de Envío -->
+                <button type="submit" class="btn btn-success w-100">Programar cita</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

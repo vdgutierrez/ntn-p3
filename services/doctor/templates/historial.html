@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Historial del Cliente{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Historial del Cliente</h1>
+
+    <!-- Mensajes Flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Formulario para buscar cliente -->
+    <form method="POST" class="mb-4">
+        <div class="row">
+            <div class="col-md-8">
+                <input type="email" name="correo_cliente" class="form-control" placeholder="Correo del Cliente" value="{{ correo_cliente or '' }}" required>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100">Buscar Historial</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Tabla de Historial -->
+    {% if historial %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Fecha de Cita</th>
+                    <th>Prueba</th>
+                    <th>Tipo de Prueba</th>
+                    <th>ID Cliente Cita</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for registro in historial %}
+                <tr>
+                    <td>{{ registro.fecha_cita }}</td>
+                    <td>{{ registro.prueba }}</td>
+                    <td>{{ registro.tipo_prueba }}</td>
+                    <td>{{ registro.id_cliente_cita }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {% if correo_cliente %}
+            <p class="text-center">No se encontraron registros para el correo ingresado.</p>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

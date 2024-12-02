@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar Enfermedad{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Registrar Nueva Enfermedad</h2>
+
+    <!-- Mostrar mensajes flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Formulario de registro -->
+    <form action="{{ url_for('funcionario.registrar_enfermedad') }}" method="POST" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre de la Enfermedad</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ejemplo: Diabetes" required>
+            <div class="invalid-feedback">
+                Por favor, ingrese el nombre de la enfermedad.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea id="descripcion" name="descripcion" class="form-control" placeholder="Ingrese una breve descripción..." rows="3" required></textarea>
+            <div class="invalid-feedback">
+                Por favor, ingrese una descripción.
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Registrar Enfermedad</button>
+    </form>
+</div>
+
+<script>
+    // Validación de formulario con Bootstrap
+    (function () {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
+{% endblock %}

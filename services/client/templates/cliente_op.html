@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Opciones del Cliente{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <!-- Mostrar el nombre del cliente logueado -->
+    <h1 class="mb-4">Bienvenido, {{ session['user']['nombre'] }}</h1>
+    <p class="lead">Selecciona una de las opciones disponibles:</p>
+    <div class="row justify-content-center">
+        <!-- Primera Card: Programar una Cita -->
+        <div class="card m-3" style="width: 18rem;">
+            <img src="https://static.vecteezy.com/system/resources/previews/012/905/181/non_2x/schedule-business-appointment-important-date-working-project-plan-or-reminder-concept-illustration-vector.jpg" class="card-img-top" alt="Programar Cita">
+            <div class="card-body">
+                <h5 class="card-title">Programar una cita para una prueba</h5>
+                <p class="card-text">Selecciona la fecha y hora de tu cita para realizarte una prueba de forma rápida.</p>
+                <a href="/client/cita" class="btn btn-success">Ir a programar</a>
+            </div>
+        </div>
+
+        <!-- Segunda Card: Ver Resultados -->
+        <div class="card m-3" style="width: 18rem;">
+            <img src="https://img.freepik.com/premium-vector/isometric-weekly-schedule-calendar-planner-time-management-online-business-workflow-task-app-teamwork-meeting_589019-3801.jpg?w=360" class="card-img-top" alt="Ver Resultados">
+            <div class="card-body">
+                <h5 class="card-title">Ver resultados de tus pruebas</h5>
+                <p class="card-text">Consulta los resultados de tus pruebas anteriores de manera rápida y segura.</p>
+                <a href="/client/resultado" class="btn btn-primary">Ver resultados</a>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

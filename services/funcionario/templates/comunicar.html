@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Comunicación con Clientes{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Enviar Mensajes a Clientes</h2>
+        
+        <form id="form-notificacion" class="mb-5">
+            <!-- Mensaje -->
+            <div class="mb-3">
+                <label for="mensaje" class="form-label">Mensaje:</label>
+                <textarea id="mensaje" name="mensaje" class="form-control" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
+            </div>
+
+            <!-- Selección de Clientes -->
+            <div class="mb-3">
+                <label for="clientes" class="form-label">Seleccionar Clientes:</label>
+                <select id="clientes" name="clientes" class="form-select" multiple>
+                    {% for cliente in clientes %}
+                    <option value="{{ cliente.id_cliente }}">
+                        {{ cliente.nombre }} {{ cliente.apellido }} ({{ cliente.correo or 'Sin correo' }} / {{ cliente.telefono or 'Sin teléfono' }})
+                    </option>
+                    {% endfor %}
+                </select>
+                <small class="form-text text-muted">Mantén presionada la tecla Ctrl o Cmd para seleccionar múltiples clientes.</small>
+            </div>
+
+            <!-- Botón de Envío -->
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-primary" onclick="enviarNotificacion()">Enviar Mensajes</button>
+            </div>
+        </form>
+
+        <!-- Resultados de Envío -->
+        <div id="resultado" class="alert d-none" role="alert"></div>
+    </div>
+</section>
+
+<script>
+    function enviarNotificacion() {
+        const mensaje = document.getElementById('mensaje').value;
+        const clientes = Array.from(document.getElementById('clientes').selectedOptions).map(option => option.value);
+        const resultado = document.getElementById('resultado');
+
+        if (!mensaje || clientes.length === 0) {
+            resultado.className = 'alert alert-danger';
+            resultado.textContent = 'Por favor, llena el mensaje y selecciona al menos un cliente.';
+            resultado.classList.remove('d-none');
+            return;
+        }
+
+        fetch('/enviar_mensaje', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ mensaje, medios_contacto: clientes })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                resultado.className = 'alert alert-success';
+                resultado.textContent = 'Mensajes enviados con éxito.';
+            } else {
+                resultado.className = 'alert alert-danger';
+                resultado.textContent = 'Error al enviar mensajes: ' + data.error;
+            }
+            resultado.classList.remove('d-none');
+        })
+        .catch(error => {
+            resultado.className = 'alert alert-danger';
+            resultado.textContent = 'Error inesperado: ' + error;
+            resultado.classList.remove('d-none');
+        });
+    }
+</script>
+{% endblock %}
