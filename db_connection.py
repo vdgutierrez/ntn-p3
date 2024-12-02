@@ -10,7 +10,8 @@ def get_db_connection():
             host='localhost',
             user='root',
             password='',
-            database='ntn3'
+            database='ntn3',
+         
         )
         if connection.is_connected():
             return connection

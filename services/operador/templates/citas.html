@@ -7,35 +7,39 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    {% include 'operador/navbar_operador.html' %}
+    {% include 'base.html' %}
 
-<div class="container mt-5">
-    <h2 class="text-center mb-4">Citas Programadas</h2>
-    
-    <!-- Tabla de citas programadas -->
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID Cliente</th>
-                <th>Nombre del Cliente</th>
-                <th>Fecha y Hora</th>
-                <th>Tipo de Prueba</th>
-                <th>Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Aquí puedes usar un bucle para listar las citas programadas del cliente -->
-            <tr>
-                <td>12345</td>
-                <td>Juan Pérez</td>
-                <td>2024-11-10 10:00</td>
-                <td>Prueba de Sangre</td>
-                <td>Pendiente</td>
-            </tr>
-            <!-- Repetir para cada cita -->
-        </tbody>
-    </table>
-</div>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Citas Programadas</h2>
+        
+        <!-- Tabla de citas programadas -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID Cliente</th>
+                    <th>Nombre del Cliente</th>
+                    <th>Fecha y Hora</th>
+                    <th>Tipo de Prueba</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in citas %}
+                <tr>
+                    <td>{{ cita.id_cliente }}</td>
+                    <td>{{ cita.nombre_cliente }}</td>
+                    <td>{{ cita.fecha_hora }}</td>
+                    <td>{{ cita.tipo_prueba }}</td>
+                    <td>{{ cita.estado }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center">No hay citas programadas.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -39,10 +39,16 @@
                         </li>
                     {% elif session['user']['tipo'] == 'operador' %}
                         <li class="nav-item">
-                            <a class="nav-link" href="">Verificación</a>
+                            <a class="nav-link" href="{{ url_for('operator.citas') }}">Citas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">Resultados</a>
+                            <a class="nav-link" href="{{ url_for('operator.registro_tipo') }}">Registro Tipo Pruebas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('operator.resultados') }}">Resultado Pruebas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('operator.registro') }}">Registro Pruebas</a>
                         </li>
                     {% elif session['user']['tipo'] == 'admin' %}
                         <li class="nav-item">

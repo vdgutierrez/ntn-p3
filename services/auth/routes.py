@@ -18,7 +18,7 @@ def login():
             # Tablas de usuarios y sus rutas de redirección
             user_tables = {
                 'funcionario': 'funcionario.estadisticas',
-                'operador': 'operador.resultados',
+                'operador': 'operator.resultados',
                 'medico': 'doctor.historial',
                 'cliente': 'client.cliente_op',
                 'admin': 'admin.register_persona'
